@@ -17,6 +17,7 @@
 package org.springframework.cloud.gateway.route;
 
 /**
+ * 从存储器中(mysql, redis, 内存)读取
  * @author Spencer Gibb
  */
 public interface RouteDefinitionRepository

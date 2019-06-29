@@ -34,6 +34,7 @@ import org.springframework.validation.annotation.Validated;
 import static org.springframework.util.StringUtils.tokenizeToStringArray;
 
 /**
+ * 用于对Route进行定义，最终被RouteLocator解析成Route
  * @author Spencer Gibb
  */
 @Validated
@@ -57,6 +58,10 @@ public class RouteDefinition {
 	public RouteDefinition() {
 	}
 
+	/**
+	 * text 格式 ${name}=${args[0]},${args[1]}...${args[n]}
+	 * @param text
+	 */
 	public RouteDefinition(String text) {
 		int eqIdx = text.indexOf('=');
 		if (eqIdx <= 0) {

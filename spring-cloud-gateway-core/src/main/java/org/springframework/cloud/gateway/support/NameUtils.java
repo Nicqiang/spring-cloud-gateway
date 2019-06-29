@@ -39,6 +39,7 @@ public final class NameUtils {
 
 	public static String normalizeRoutePredicateName(
 			Class<? extends RoutePredicateFactory> clazz) {
+		//getSimpleName,去掉package
 		return removeGarbage(clazz.getSimpleName()
 				.replace(RoutePredicateFactory.class.getSimpleName(), ""));
 	}

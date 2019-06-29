@@ -25,9 +25,14 @@ import reactor.core.publisher.Mono;
 import org.springframework.util.Assert;
 
 /**
+ * 定于了3种逻辑操作方法
+ * and，需要同时满足
+ * negate,取反
+ * or, 或，满足中一个条件即可
  * @author Ben Hale
  */
 public interface AsyncPredicate<T> extends Function<T, Publisher<Boolean>> {
+
 
 	default AsyncPredicate<T> and(AsyncPredicate<? super T> other) {
 		Assert.notNull(other, "other must not be null");

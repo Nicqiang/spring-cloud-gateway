@@ -45,6 +45,11 @@ public class AfterRoutePredicateFactory
 		return Collections.singletonList(DATETIME_KEY);
 	}
 
+	/**
+	 * 生产Predicate对象，逻辑判断当前时间是否在Config中指定的datetime之后
+	 * @param config
+	 * @return
+	 */
 	@Override
 	public Predicate<ServerWebExchange> apply(Config config) {
 		ZonedDateTime datetime = config.getDatetime();

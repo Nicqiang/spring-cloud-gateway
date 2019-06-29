@@ -88,9 +88,15 @@ public class RouteDefinitionRouteLocator
 			List<RoutePredicateFactory> predicates,
 			List<GatewayFilterFactory> gatewayFilterFactories,
 			GatewayProperties gatewayProperties, ConversionService conversionService) {
+
 		this.routeDefinitionLocator = routeDefinitionLocator;
 		this.conversionService = conversionService;
+		//工厂列表，
+		//，会被映射成 key 为 name, value 为 factory 的 Map。
+		// 可以猜想出 gateway 是如何根据 PredicateDefinition 中定义的 name 来匹配到相对应的 factory 了
 		initFactories(predicates);
+
+		//Gateway Filter 工厂列表，同样会被映射成 key 为 name, value 为 factory 的 Map
 		gatewayFilterFactories.forEach(
 				factory -> this.gatewayFilterFactories.put(factory.name(), factory));
 		this.gatewayProperties = gatewayProperties;
@@ -138,6 +144,11 @@ public class RouteDefinitionRouteLocator
 		 */
 	}
 
+	/**
+	 * routeDefine ---->  route
+	 * @param routeDefinition
+	 * @return
+	 */
 	private Route convertToRoute(RouteDefinition routeDefinition) {
 		AsyncPredicate<ServerWebExchange> predicate = combinePredicates(routeDefinition);
 		List<GatewayFilter> gatewayFilters = getFilters(routeDefinition);
@@ -206,6 +217,12 @@ public class RouteDefinitionRouteLocator
 		return filters;
 	}
 
+	/**
+	 * 将每一个PredicateDefinition --> AsyncPredicate
+	 * 然后应用and操作，将所有AsyncPredicate组合成一个AsyncPredicate
+	 * @param routeDefinition
+	 * @return
+	 */
 	private AsyncPredicate<ServerWebExchange> combinePredicates(
 			RouteDefinition routeDefinition) {
 		List<PredicateDefinition> predicates = routeDefinition.getPredicates();
@@ -216,12 +233,20 @@ public class RouteDefinitionRouteLocator
 				predicates.size())) {
 			AsyncPredicate<ServerWebExchange> found = lookup(routeDefinition,
 					andPredicate);
+
 			predicate = predicate.and(found);
 		}
 
 		return predicate;
 	}
 
+
+	/**
+	 * 将RouteDefinition --> AsyncPredicate
+	 * @param route
+	 * @param predicate
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	private AsyncPredicate<ServerWebExchange> lookup(RouteDefinition route,
 			PredicateDefinition predicate) {

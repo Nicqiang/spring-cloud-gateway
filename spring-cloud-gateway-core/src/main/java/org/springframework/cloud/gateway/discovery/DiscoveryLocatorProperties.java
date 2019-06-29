@@ -28,6 +28,7 @@ import org.springframework.core.style.ToStringCreator;
 public class DiscoveryLocatorProperties {
 
 	/** Flag that enables DiscoveryClient gateway integration. */
+	//默认不启用
 	private boolean enabled = false;
 
 	/**

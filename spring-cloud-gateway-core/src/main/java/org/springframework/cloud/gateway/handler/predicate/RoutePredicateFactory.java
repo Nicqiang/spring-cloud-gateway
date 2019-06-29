@@ -28,6 +28,8 @@ import org.springframework.web.server.ServerWebExchange;
 import static org.springframework.cloud.gateway.support.ServerWebExchangeUtils.toAsyncPredicate;
 
 /**
+ * 使用 RoutePredicateFactory 创建 Predicate 对象。
+ * Predicate 对象可以赋值给 Route.predicate 属性，用于匹配请求对应的 Route
  * @author Spencer Gibb
  */
 @FunctionalInterface
@@ -65,12 +67,19 @@ public interface RoutePredicateFactory<C> extends ShortcutConfigurable, Configur
 	default void beforeApply(C config) {
 	}
 
+	//生产Predicate
 	Predicate<ServerWebExchange> apply(C config);
 
 	default AsyncPredicate<ServerWebExchange> applyAsync(C config) {
 		return toAsyncPredicate(apply(config));
 	}
 
+	/**
+	 * 获得RoutePredicateFactory的名字
+	 * 该方法截取类名的前半段
+	 * 例如 QueryRoutePredicateFactory 的结果为 Query
+	 * @return
+	 */
 	default String name() {
 		return NameUtils.normalizeRoutePredicateName(getClass());
 	}

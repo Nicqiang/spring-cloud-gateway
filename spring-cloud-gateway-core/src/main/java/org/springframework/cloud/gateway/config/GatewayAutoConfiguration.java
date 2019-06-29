@@ -140,6 +140,7 @@ import static org.springframework.cloud.gateway.config.HttpClientProperties.Pool
  * @author Spencer Gibb
  */
 @Configuration
+//网关默认开启
 @ConditionalOnProperty(name = "spring.cloud.gateway.enabled", matchIfMissing = true)
 @EnableConfigurationProperties
 @AutoConfigureBefore({ HttpHandlerAutoConfiguration.class,
@@ -514,6 +515,11 @@ public class GatewayAutoConfiguration {
 	@ConditionalOnClass(HttpClient.class)
 	protected static class NettyConfiguration {
 
+		/**
+		 * 创建httpClient
+		 * @param properties
+		 * @return
+		 */
 		@Bean
 		@ConditionalOnMissingBean
 		public HttpClient httpClient(HttpClientProperties properties) {
@@ -609,6 +615,12 @@ public class GatewayAutoConfiguration {
 			return new NettyRoutingFilter(httpClient, headersFilters, properties);
 		}
 
+
+		/**
+		 * netty 过滤
+		 * @param properties
+		 * @return
+		 */
 		@Bean
 		public NettyWriteResponseFilter nettyWriteResponseFilter(
 				GatewayProperties properties) {

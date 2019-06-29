@@ -41,6 +41,11 @@ import org.springframework.scripting.support.ResourceScriptSource;
 import org.springframework.validation.Validator;
 import org.springframework.web.reactive.DispatcherHandler;
 
+
+/**
+ * 基于RedisRateLimiter实现网关的限流功能
+ */
+
 @Configuration
 @AutoConfigureAfter(RedisReactiveAutoConfiguration.class)
 @AutoConfigureBefore(GatewayAutoConfiguration.class)

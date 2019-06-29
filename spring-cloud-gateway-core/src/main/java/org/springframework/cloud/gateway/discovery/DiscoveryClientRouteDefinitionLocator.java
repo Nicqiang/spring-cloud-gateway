@@ -40,7 +40,7 @@ import org.springframework.util.StringUtils;
 
 /**
  * TODO: change to RouteLocator? use java dsl
- *
+ * 从注册中心加载配置
  * @author Spencer Gibb
  */
 public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionLocator {
@@ -94,6 +94,7 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionLoc
 		}
 
 		return Flux.fromIterable(discoveryClient.getServices())
+				//获取服务列表
 				.map(discoveryClient::getInstances)
 				.filter(instances -> !instances.isEmpty())
 				.map(instances -> instances.get(0)).filter(includePredicate)
@@ -101,13 +102,17 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionLoc
 					String serviceId = instance.getServiceId();
 
 					RouteDefinition routeDefinition = new RouteDefinition();
+
+					//设置id
 					routeDefinition.setId(this.routeIdPrefix + serviceId);
+					//设置uri
 					String uri = urlExpr.getValue(evalCtxt, instance, String.class);
 					routeDefinition.setUri(URI.create(uri));
 
 					final ServiceInstance instanceForEval = new DelegatingServiceInstance(
 							instance, properties);
 
+					//设置断言
 					for (PredicateDefinition original : this.properties.getPredicates()) {
 						PredicateDefinition predicate = new PredicateDefinition();
 						predicate.setName(original.getName());
@@ -120,6 +125,7 @@ public class DiscoveryClientRouteDefinitionLocator implements RouteDefinitionLoc
 						routeDefinition.getPredicates().add(predicate);
 					}
 
+					//过滤器
 					for (FilterDefinition original : this.properties.getFilters()) {
 						FilterDefinition filter = new FilterDefinition();
 						filter.setName(original.getName());

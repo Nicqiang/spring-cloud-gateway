@@ -41,6 +41,10 @@ public class FilterDefinition {
 	public FilterDefinition() {
 	}
 
+	/**
+	 * ext 格式 ${name}=${args[0]},${args[1]}...${args[n]}
+	 * @param text
+	 */
 	public FilterDefinition(String text) {
 		int eqIdx = text.indexOf('=');
 		if (eqIdx <= 0) {

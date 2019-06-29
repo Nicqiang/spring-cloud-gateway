@@ -32,6 +32,10 @@ public class PropertiesRouteDefinitionLocator implements RouteDefinitionLocator 
 		this.properties = properties;
 	}
 
+	/**
+	 * 从 GatewayProperties中读取路由配置
+	 * @return
+	 */
 	@Override
 	public Flux<RouteDefinition> getRouteDefinitions() {
 		return Flux.fromIterable(this.properties.getRoutes());

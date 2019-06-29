@@ -37,6 +37,9 @@ public class CachingRouteLocator
 
 	private final Flux<Route> routes;
 
+	/**
+	 * 路由缓存
+	 */
 	private final Map<String, List> cache = new HashMap<>();
 
 	public CachingRouteLocator(RouteLocator delegate) {
@@ -53,6 +56,7 @@ public class CachingRouteLocator
 
 	/**
 	 * Clears the routes cache.
+	 * 刷新缓存
 	 * @return routes flux
 	 */
 	public Flux<Route> refresh() {
@@ -64,6 +68,8 @@ public class CachingRouteLocator
 	public void onApplicationEvent(RefreshRoutesEvent event) {
 		refresh();
 	}
+
+
 
 	@Deprecated
 	/* for testing */ void handleRefresh() {

@@ -33,6 +33,7 @@ import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 
 /**
+ * spring cloud gateway模块提供外部化配置
  * @author Spencer Gibb
  */
 @ConfigurationProperties("spring.cloud.gateway")
@@ -50,6 +51,7 @@ public class GatewayProperties {
 
 	/**
 	 * List of filter definitions that are applied to every route.
+	 * 默认的filter列表
 	 */
 	private List<FilterDefinition> defaultFilters = new ArrayList<>();
 

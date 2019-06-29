@@ -31,6 +31,11 @@ import org.springframework.web.server.ServerWebExchange;
  * @author Rossen Stoyanchev
  * @since 5.0
  */
+
+/**
+ * Filter 最终通过filter chain 来形成链式调用，每个filter处理完pre filter逻辑后委派给filter chain
+ * filter chain再委派给filter
+ */
 public interface GatewayFilter extends ShortcutConfigurable {
 
 	/**

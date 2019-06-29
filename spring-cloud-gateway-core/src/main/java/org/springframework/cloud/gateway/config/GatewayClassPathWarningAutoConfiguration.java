@@ -24,6 +24,10 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.context.annotation.Configuration;
 
+
+/**
+ * 用于检查项目是否正确导入spring-boot-start-webflux组件，而不是错误导入 spring-boot-starter-web 依赖
+ */
 @Configuration
 @AutoConfigureBefore(GatewayAutoConfiguration.class)
 public class GatewayClassPathWarningAutoConfiguration {
@@ -34,6 +38,7 @@ public class GatewayClassPathWarningAutoConfiguration {
 	private static final String BORDER = "\n\n**********************************************************\n\n";
 
 	@Configuration
+	//导入spring-boot-starter-web
 	@ConditionalOnClass(name = "org.springframework.web.servlet.DispatcherServlet")
 	protected static class SpringMvcFoundOnClasspathConfiguration {
 
